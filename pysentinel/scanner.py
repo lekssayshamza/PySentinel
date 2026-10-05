@@ -3,7 +3,7 @@ import requests
 from pysentinel.crawler import crawl
 from pysentinel.technologies import detect_technologies
 from pysentinel.headers import check_security_headers
-from pysentinel.utils import normalize_url
+from pysentinel.utils import get_parameters, normalize_url
 from pysentinel.cookies import check_cookie_security
 
 
@@ -18,6 +18,16 @@ def scan_target(url):
         print(f"Server: {response.headers.get('Server', 'Unknown')}")
         print(f"Content-Type: {response.headers.get('Content-Type', 'Unknown')}")
         print(f"Response Size: {len(response.content)} bytes")
+
+        print("\nParameters:")
+
+        parameters = get_parameters(url)
+
+        if not parameters:
+            print("[*] No query parameters detected")
+        else:
+            for name, values in parameters.items():
+                print(f"[+] {name}: {values}")
 
         print("\nSecurity Findings:")
 
