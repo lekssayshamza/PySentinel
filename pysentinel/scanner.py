@@ -2,6 +2,7 @@ import requests
 
 from pysentinel.headers import check_security_headers
 from pysentinel.utils import normalize_url
+from pysentinel.cookies import check_cookie_security
 
 
 def scan_target(url):
@@ -25,6 +26,19 @@ def scan_target(url):
                 print(f"[+] {header}: Present")
             else:
                 print(f"[-] {header}: Missing")
+
+        print("\nCookies:")
+
+        cookies = check_cookie_security(response)
+
+        if not cookies:
+            print("[*] No cookies detected")
+        else:
+            for cookie in cookies:
+                print(f"Cookie: {cookie['name']}")
+                print(f"  Secure: {cookie['secure']}")
+                print(f"  HttpOnly: {cookie['httponly']}")
+                print(f"  SameSite: {cookie['samesite']}")
 
     except requests.RequestException as error:
         print(f"Error: {error}")
