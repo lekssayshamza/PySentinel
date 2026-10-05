@@ -1,6 +1,6 @@
 import requests
 
-from pysentinel.crawler import discover_links
+from pysentinel.crawler import crawl
 from pysentinel.technologies import detect_technologies
 from pysentinel.headers import check_security_headers
 from pysentinel.utils import normalize_url
@@ -59,7 +59,7 @@ def scan_target(url):
 
         print("\nDiscovered Links:")
 
-        links = discover_links(response)
+        links = crawl(url, max_depth=1)
 
         if not links:
             print("[*] No internal links discovered")
