@@ -1,16 +1,26 @@
-SECURITY_HEADERS = [
-    "Content-Security-Policy",
-    "Strict-Transport-Security",
-    "X-Frame-Options",
-    "X-Content-Type-Options",
-    "Referrer-Policy",
-]
+from pysentinel.findings import create_finding
+
+
+SECURITY_HEADERS = {
+    "Content-Security-Policy": "MEDIUM",
+    "Strict-Transport-Security": "MEDIUM",
+    "X-Frame-Options": "MEDIUM",
+    "X-Content-Type-Options": "LOW",
+    "Referrer-Policy": "LOW",
+}
 
 
 def check_security_headers(response):
-    results = {}
+    findings = []
 
-    for header in SECURITY_HEADERS:
-        results[header] = header in response.headers
+    for header, severity in SECURITY_HEADERS.items():
+        if header not in response.headers:
+            findings.append(
+                create_finding(
+                    header,
+                    severity,
+                    f"{header} is missing",
+                )
+            )
 
-    return results
+    return findings

@@ -18,15 +18,19 @@ def scan_target(url):
         print(f"Content-Type: {response.headers.get('Content-Type', 'Unknown')}")
         print(f"Response Size: {len(response.content)} bytes")
 
-        print("\nSecurity Headers:")
+        print("\nSecurity Findings:")
 
-        results = check_security_headers(response)
+        findings = check_security_headers(response)
 
-        for header, present in results.items():
-            if present:
-                print(f"[+] {header}: Present")
-            else:
-                print(f"[-] {header}: Missing")
+        if not findings:
+            print("[+] No security header issues detected")
+        else:
+            for finding in findings:
+                print(
+                    f"[{finding['severity']}] "
+                    f"{finding['name']}: "
+                    f"{finding['description']}"
+                )
 
         print("\nCookies:")
 
