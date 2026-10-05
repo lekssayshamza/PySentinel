@@ -1,10 +1,13 @@
 import requests
 import sys
 
+from utils import normalize_url
 from headers import check_security_headers
 
 
 def scan_target(url):
+    url = normalize_url(url)
+
     try:
         response = requests.get(url, timeout=5)
 
