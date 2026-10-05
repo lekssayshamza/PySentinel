@@ -1,9 +1,8 @@
 import requests
 import sys
 
-from utils import normalize_url
-from headers import check_security_headers
-
+from pysentinel.headers import check_security_headers
+from pysentinel.utils import normalize_url
 
 def scan_target(url):
     url = normalize_url(url)
