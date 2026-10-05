@@ -32,18 +32,19 @@ def scan_target(url):
                     f"{finding['description']}"
                 )
 
-        print("\nCookies:")
+        print("\nCookie Findings:")
 
-        cookies = check_cookie_security(response)
+        cookie_findings = check_cookie_security(response)
 
-        if not cookies:
-            print("[*] No cookies detected")
+        if not cookie_findings:
+            print("[+] No cookie security issues detected")
         else:
-            for cookie in cookies:
-                print(f"Cookie: {cookie['name']}")
-                print(f"  Secure: {cookie['secure']}")
-                print(f"  HttpOnly: {cookie['httponly']}")
-                print(f"  SameSite: {cookie['samesite']}")
+            for finding in cookie_findings:
+                print(
+                     f"[{finding['severity']}] "
+                     f"{finding['name']}: "
+                     f"{finding['description']}"
+                )
 
         print("\nTechnologies:")
 

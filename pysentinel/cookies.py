@@ -1,8 +1,10 @@
 from http.cookies import SimpleCookie
 
+from pysentinel.findings import create_finding
+
 
 def check_cookie_security(response):
-    results = []
+    findings = []
 
     responses = list(response.history) + [response]
 
@@ -14,11 +16,31 @@ def check_cookie_security(response):
             cookie.load(header)
 
             for name, morsel in cookie.items():
-                results.append({
-                    "name": name,
-                    "secure": bool(morsel["secure"]),
-                    "httponly": bool(morsel["httponly"]),
-                    "samesite": morsel["samesite"] or None,
-                })
+                if not morsel["secure"]:
+                    findings.append(
+                        create_finding(
+                            f"Cookie: {name}",
+                            "MEDIUM",
+                            "Cookie is missing the Secure flag",
+                        )
+                    )
 
-    return results
+                if not morsel["httponly"]:
+                    findings.append(
+                        create_finding(
+                            f"Cookie: {name}",
+                            "MEDIUM",
+                            "Cookie is missing the HttpOnly flag",
+                        )
+                    )
+
+                if not morsel["samesite"]:
+                    findings.append(
+                        create_finding(
+                            f"Cookie: {name}",
+                            "LOW",
+                            "Cookie is missing the SameSite attribute",
+                        )
+                    )
+
+    return findings
