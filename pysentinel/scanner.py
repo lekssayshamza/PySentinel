@@ -1,5 +1,6 @@
 import requests
 
+from pysentinel.technologies import detect_technologies
 from pysentinel.headers import check_security_headers
 from pysentinel.utils import normalize_url
 from pysentinel.cookies import check_cookie_security
@@ -39,6 +40,16 @@ def scan_target(url):
                 print(f"  Secure: {cookie['secure']}")
                 print(f"  HttpOnly: {cookie['httponly']}")
                 print(f"  SameSite: {cookie['samesite']}")
+
+        print("\nTechnologies:")
+
+        technologies = detect_technologies(response)
+
+        if not technologies:
+            print("[*] No technology information detected")
+        else:
+            for technology in technologies:
+                print(f"[+] {technology}")
 
     except requests.RequestException as error:
         print(f"Error: {error}")
