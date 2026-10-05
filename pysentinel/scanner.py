@@ -1,8 +1,8 @@
 import requests
-import sys
 
 from pysentinel.headers import check_security_headers
 from pysentinel.utils import normalize_url
+
 
 def scan_target(url):
     url = normalize_url(url)
@@ -30,9 +30,3 @@ def scan_target(url):
         print(f"Error: {error}")
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python scanner.py <URL>")
-        sys.exit(1)
-
-    scan_target(sys.argv[1])
