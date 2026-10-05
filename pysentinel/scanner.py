@@ -1,5 +1,6 @@
 import requests
 
+from pysentinel.xss import check_reflected_xss
 from pysentinel.crawler import crawl
 from pysentinel.technologies import detect_technologies
 from pysentinel.headers import check_security_headers
@@ -28,6 +29,20 @@ def scan_target(url):
         else:
             for name, values in parameters.items():
                 print(f"[+] {name}: {values}")
+
+        print("\nXSS Findings:")
+
+        xss_findings = check_reflected_xss(url)
+
+        if not xss_findings:
+            print("[+] No reflected XSS detected")
+        else:
+            for finding in xss_findings:
+                print(
+                    f"[{finding['severity']}] "
+                    f"{finding['name']}: "
+                    f"{finding['description']}"
+                )
 
         print("\nSecurity Findings:")
 
