@@ -39,8 +39,8 @@ def check_reflected_xss(url):
         if marker in response.text:
             findings.append(
                 create_finding(
-                    f"Reflected XSS: {parameter}",
-                    "HIGH",
+                    f"Potential Reflected XSS: {parameter}",
+                    "MEDIUM",
                     f"Parameter '{parameter}' reflects user-controlled input",
                 )
             )
