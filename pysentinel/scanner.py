@@ -1,14 +1,7 @@
 import requests
 import sys
 
-
-SECURITY_HEADERS = [
-    "Content-Security-Policy",
-    "Strict-Transport-Security",
-    "X-Frame-Options",
-    "X-Content-Type-Options",
-    "Referrer-Policy",
-]
+from headers import check_security_headers
 
 
 def scan_target(url):
@@ -23,8 +16,10 @@ def scan_target(url):
 
         print("\nSecurity Headers:")
 
-        for header in SECURITY_HEADERS:
-            if header in response.headers:
+        results = check_security_headers(response)
+
+        for header, present in results.items():
+            if present:
                 print(f"[+] {header}: Present")
             else:
                 print(f"[-] {header}: Missing")
