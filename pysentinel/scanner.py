@@ -1,5 +1,6 @@
 import requests
 
+from pysentinel.sqli import check_sql_injection
 from pysentinel.xss import check_reflected_xss
 from pysentinel.crawler import crawl
 from pysentinel.technologies import detect_technologies
@@ -42,6 +43,20 @@ def scan_target(url):
                     f"[{finding['severity']}] "
                     f"{finding['name']}: "
                     f"{finding['description']}"
+                )
+
+        print("\nSQL Injection Findings:")
+
+        sqli_findings = check_sql_injection(url)
+
+        if not sqli_findings:
+            print("[+] No potential SQL injection detected")
+        else:
+            for finding in sqli_findings:
+                print(
+                    f"[{finding['severity']}] "
+            	    f"{finding['name']}: "
+            	    f"{finding['description']}"
                 )
 
         print("\nSecurity Findings:")
