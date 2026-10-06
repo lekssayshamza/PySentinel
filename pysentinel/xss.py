@@ -42,6 +42,7 @@ def check_reflected_xss(url):
                     f"Potential Reflected XSS: {parameter}",
                     "MEDIUM",
                     f"Parameter '{parameter}' reflects user-controlled input",
+                    "Cross-Site Scripting",
                 )
             )
 

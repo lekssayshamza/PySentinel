@@ -20,6 +20,7 @@ def check_security_headers(response):
                     header,
                     severity,
                     f"{header} is missing",
+                    "Security Headers",
                 )
             )
 

@@ -22,6 +22,7 @@ def check_cookie_security(response):
                             f"Cookie: {name}",
                             "MEDIUM",
                             "Cookie is missing the Secure flag",
+                            "Cookie Security",
                         )
                     )
 
@@ -31,6 +32,7 @@ def check_cookie_security(response):
                             f"Cookie: {name}",
                             "MEDIUM",
                             "Cookie is missing the HttpOnly flag",
+                            "Cookie Security",
                         )
                     )
 
@@ -40,6 +42,7 @@ def check_cookie_security(response):
                             f"Cookie: {name}",
                             "LOW",
                             "Cookie is missing the SameSite attribute",
+                            "Cookie Security",
                         )
                     )
 

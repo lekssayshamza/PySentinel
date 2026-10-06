@@ -7,11 +7,12 @@ SEVERITY_LEVELS = {
 }
 
 
-def create_finding(name, severity, description):
+def create_finding(name, severity, description, category="General"):
     return {
         "name": name,
         "severity": severity,
         "description": description,
+        "category": category,
     }
 
 

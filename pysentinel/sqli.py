@@ -54,11 +54,12 @@ def check_sql_injection(url):
         for pattern in SQL_ERROR_PATTERNS:
             if pattern in response_text:
                 findings.append(
-                    create_finding(
-                        f"Potential SQL Injection: {parameter}",
-                        "HIGH",
-                        f"Database error pattern detected after modifying parameter '{parameter}'",
-                    )
+                        create_finding(
+                            f"Potential SQL Injection: {parameter}",
+                            "HIGH",
+                            f"Database error pattern detected after modifying parameter '{parameter}'",
+                            "SQL Injection",
+                        )
                 )
                 break
 
