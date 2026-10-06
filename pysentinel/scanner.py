@@ -14,6 +14,7 @@ def scan_target(url):
 
     try:
         response = requests.get(url, timeout=5)
+        all_findings = []
 
         print(f"Target: {url}")
         print(f"Status Code: {response.status_code}")
@@ -34,6 +35,7 @@ def scan_target(url):
         print("\nXSS Findings:")
 
         xss_findings = check_reflected_xss(url)
+        all_findings.extend(xss_findings)
 
         if not xss_findings:
             print("[+] No reflected XSS detected")
@@ -48,6 +50,7 @@ def scan_target(url):
         print("\nSQL Injection Findings:")
 
         sqli_findings = check_sql_injection(url)
+        all_findings.extend(sqli_findings)
 
         if not sqli_findings:
             print("[+] No potential SQL injection detected")
@@ -62,6 +65,7 @@ def scan_target(url):
         print("\nSecurity Findings:")
 
         findings = check_security_headers(response)
+        all_findings.extend(findings)
 
         if not findings:
             print("[+] No security header issues detected")
@@ -76,6 +80,7 @@ def scan_target(url):
         print("\nCookie Findings:")
 
         cookie_findings = check_cookie_security(response)
+        all_findings.extend(cookie_findings)
 
         if not cookie_findings:
             print("[+] No cookie security issues detected")
@@ -107,6 +112,7 @@ def scan_target(url):
             for link in links:
                 print(f"[+] {link}")
 
+        return all_findings
     except requests.RequestException as error:
         print(f"Error: {error}")
 
