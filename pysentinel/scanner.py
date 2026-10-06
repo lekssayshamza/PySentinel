@@ -1,5 +1,6 @@
 import requests
 
+from pysentinel.findings import summarize_findings
 from pysentinel.sqli import check_sql_injection
 from pysentinel.xss import check_reflected_xss
 from pysentinel.crawler import crawl
@@ -112,7 +113,19 @@ def scan_target(url):
             for link in links:
                 print(f"[+] {link}")
 
+        print("\nScan Summary:")
+
+        summary = summarize_findings(all_findings)
+
+        print(f"Findings: {len(all_findings)}")
+        print(f"CRITICAL: {summary['CRITICAL']}")
+        print(f"HIGH: {summary['HIGH']}")
+        print(f"MEDIUM: {summary['MEDIUM']}")
+        print(f"LOW: {summary['LOW']}")
+        print(f"INFO: {summary['INFO']}")
+
         return all_findings
+
     except requests.RequestException as error:
         print(f"Error: {error}")
 
